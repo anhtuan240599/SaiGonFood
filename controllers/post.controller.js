@@ -9,9 +9,25 @@ const getPost = async(req,res,next) => {
 }
 
 const createPost = async(req,res,next) => {
-    const newPost = new Post 
+    const post = req.body
+    const newPost = new Post(post)
+    if (req.files) {
+        const urls = []
+        const ids = []
+        for (const File of req.files) {
+            const { path } = File
+            const result = await cloudinary.uploader.upload(path);
+            urls.push(result.secure_url)
+            ids.push(result.public_id)
+
+        }
+        newPost.image = urls
+    }
+    await newPost.save()
+    return res.status(201).json({success:true,post: newPost})
 }
 
 module.exports = {
-    getPost
+    getPost,
+    createPost
 }
