@@ -1,10 +1,13 @@
 const express = require('express');
 const router = require('express-promise-router')()
-const UserController = require('../controllers/User.controller')
+const UserController = require('../controllers/user.controller')
 const upload = require('../middleware/upload')
+const verifyToken = require('../middleware/verify-token')
+
+router.route('/register')
+    .post(UserController.register)
 
 router.route('/')
-    .get(UserController.getUser)
-    .User(upload.array('image',10), UserController.createUser)
+    .get(verifyToken,UserController.foundUser)
 
 module.exports = router;
