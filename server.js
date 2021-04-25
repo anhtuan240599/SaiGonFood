@@ -1,30 +1,30 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const app = express(cors());
 const server = require("http").Server(app);
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-
 // Use express FrameWork
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 //import config
 const MongoURI = require("./config/key").MongoURI;
 
 //import routes
 const postRoute = require("./routes/post");
-const userRoute = require('./routes/user')
+const userRoute = require("./routes/user");
+const reviewRoute = require("./routes/review");
 
 // Routes
 app.use("/posts", postRoute);
-app.use('/users',userRoute)
-app.get('/', (req, res) => {
-  res.send('Hello World');
+app.use("/users", userRoute);
+app.use("/reviews", reviewRoute);
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });
-
 
 //Connect database
 mongoose
