@@ -1,50 +1,57 @@
-const express = require('express');
-const server = require('http').Server()
-const mongoose = require('mongoose');
+const express = require("express");
+const app = express();
+const server = require("http").Server(app);
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 // Use express FrameWork
-const app = express()
+app.use(bodyParser.json());
 
 //import config
-const MongoURI = require('./config/key').MongoURI
+const MongoURI = require("./config/key").MongoURI;
 
 //import routes
-const postRoute = require('./routes/post')
+const postRoute = require("./routes/post");
 
 // Routes
-app.use('/posts',postRoute)
+app.use("/posts", postRoute);
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 
 //Connect database
-mongoose.connect(MongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-})
-.then(()=> console.log('connect to database'))
-.catch((err) => console.log(err) )
+mongoose
+  .connect(MongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(() => console.log("connect to database"))
+  .catch((err) => console.log(err));
 
 //Catch error
-app.use((req,res,next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
-})
-
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
 
 //Error function
-app.use((err,req,res,next) =>  {
-  const error = app.get('env') === 'development' ? err : {} ;
-  const status = err.status || 500
+app.use((err, req, res, next) => {
+  const error = app.get("env") === "development" ? err : {};
+  const status = err.status || 500;
 
-  //response to client 
+  //response to client
   return res.status(status).json({
-      error: {
-          message : error.message
-      }
-  })
-})
+    error: {
+      message: error.message,
+    },
+  });
+});
 
-
-const PORT = process.env.PORT || 3000
-server.listen(process.env.PORT || 3000 , console.log(`server is running with http://localhost:${PORT}`))
+const PORT = process.env.PORT || 3000;
+server.listen(
+  process.env.PORT || 3000,
+  console.log(`server is running with http://localhost:${PORT}`)
+);
