@@ -1,5 +1,5 @@
 const User = require("../model/User");
-const JWT = require('jsonwebtoken')
+const JWT = require("jsonwebtoken");
 
 const register = async (req, res, next) => {
   const { email, password } = req.body;
@@ -23,18 +23,16 @@ const register = async (req, res, next) => {
 };
 
 const foundUser = async (req, res, next) => {
-
-  let foundUser = await User.findOne({ _id: req.decoded._id })
+  let foundUser = await User.findOne({ _id: req.decoded._id });
   if (foundUser) {
-      res.json({
-          success: true,
-          user: foundUser
-      })
+    res.json({
+      success: true,
+      user: foundUser,
+    });
   }
-
-}
+};
 
 module.exports = {
   register,
-  foundUser
-}
+  foundUser,
+};
