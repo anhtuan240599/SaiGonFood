@@ -11,4 +11,7 @@ router.route('/register')
 router.route('/')
     .get(verifyToken,UserController.foundUser)
 
+// router.route('/verify-email')
+//     .get(UserController.)
+
 module.exports = router;

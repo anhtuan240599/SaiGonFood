@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   password: String,
   image: Object,
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+  isVerified : false
 });
 
 UserSchema.methods.isValidPassword = async function (newPassword) {
