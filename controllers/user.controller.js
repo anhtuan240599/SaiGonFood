@@ -1,7 +1,7 @@
 const User = require("../model/User");
 const JWT = require("jsonwebtoken");
 const mailConfig = require("../config/mail");
-const SMS = require('../config/sms')
+const SMS = require("../config/sms");
 
 const register = async (req, res, next) => {
   SMS.sendSMS()
