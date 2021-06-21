@@ -4,7 +4,6 @@ const mailConfig = require("../config/mail");
 const SMS = require("../config/sms");
 
 const register = async (req, res, next) => {
-  SMS.sendSMS()
   const newUser = req.body;
   const header = req.headers.host;
   const { email, password } = req.body;
