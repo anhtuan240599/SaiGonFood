@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const UserSchema = new Schema({
   email: String,
   password: String,
+  userName: String,
   image: Object,
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   isVerified : false,
